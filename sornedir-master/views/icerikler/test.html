@@ -1,0 +1,12 @@
+{% extends '../main.html' %}
+{% load static %}
+
+{% block content %}
+
+	<ul>
+	{% for soru in sorular %}
+		<li><h4>{{ soru.title }}</h4></li>
+	{% endfor %}
+	</ul>
+
+{% endblock %}

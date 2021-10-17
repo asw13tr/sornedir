@@ -1,0 +1,26 @@
+{% extends '../main.html' %}
+{% block content %}
+<div class="container">
+
+<div class="row">
+<div class="col-md-4"></div>
+<div class="col-md-4">
+	
+	{% load crispy_forms_tags %}
+	<div class="text-center"><h3><strong>Çıkış Yap</strong></h3><hr></div>
+	<div id="login_form">
+	<form action="" method="POST">
+		{% csrf_token %}
+		<p>Sevgili <strong>{{ request.user.username }}</strong> çıkış yapmak istediğinizden emin misiniz?</p>
+		<input type="hidden" name="cikis_yap" value="Evet"/>
+		<div class="form-group"><button class="btn btn-primary form-control">Çıkış Yap</button></div>
+		<div class="form-group"><a href="{% url 'url_anasayfa' %}" class="btn btn-warning form-control">Vazgeç</a></div>
+		<div class="clearfix"></div>
+	</form> 
+	</div>
+
+</div>
+<div class="col-md-4"></div>
+</div>
+</div>
+{% endblock %}

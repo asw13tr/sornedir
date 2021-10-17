@@ -1,0 +1,47 @@
+{% extends '../main.html' %}
+{% load static %}
+{% block content %}
+
+{% if big_title %}<h1 class="big-title2" title="{{ big_title }}">{{ big_title }}</h1>{% endif %}
+
+<div class="row q-list q-list-grid">
+
+{% if sorular %}
+	{% for soru in sorular %}
+	<section class="col-sm-6">
+	<div class="q-item q-list-item">
+
+		<header>
+				<img src="{{ soru.get_user_photo }}" alt="{{ soru.get_username }}" width="40" height="40"/>
+				<span><strong><a href="{{ soru.get_user_profile }}" name="{{ soru.get_username }}">{{ soru.get_username }}</a></strong> <small>tarafından</small><br/> {{ soru.c_time|timesince }} <small>önce soruldu</small></span>
+				<h3 title="{{ soru.title }}"><a href="{{ soru.url_detail }}" name="{{ soru.title }}">{{ soru.title }}</a></h3>
+		</header>
+
+		<p>{% autoescape off %}{{ soru.content|truncatewords:20|striptags }}{% endautoescape %}</p>
+
+		<a href="{{ soru.category.url_questions }}" class="question_category_url">{{ soru.category }}</a>
+		{% if soru.tags.count > 0 %}
+		<p><em class="fa fa-tags"></em> {% for tag in soru.tags.iterator %} <a href="{{ tag.url_questions }}" name="{{ tag.name }}" class="tagurl">{{ tag.name }}</a> {% endfor %}</p> 
+		{% endif %}
+
+		<a href="{{ soru.url_detail }}"><strong>{{ soru.cevaplar.count }} yanıt</strong></a>
+		
+	</div>
+	</section>
+	{% endfor %}
+
+{% else %}
+<section class="col-sm-12">
+<div class="q-item q-list-item"><br/>
+<div class="alert alert-warning text-center">Hiç İçerik Bulunamadı</div>
+</div>
+</section>
+{% endif %}
+
+</div>
+
+{% endblock %}
+
+{% block script %}
+{% include '../q-list-scripts.html' %}
+{% endblock %}

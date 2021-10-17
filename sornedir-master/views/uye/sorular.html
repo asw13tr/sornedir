@@ -1,0 +1,53 @@
+{% extends '../main.html' %}
+{% block content %}
+<div class="container">
+
+<div class="row">
+<div class="col-md-12">
+	<ul class="nav nav-tabs">
+	  <li role="presentation"><a href="{% url 'url_profilim' %}">Profilim</a></li>
+	  <li role="presentation" class="active"><a href="{% url 'uye_profil_sorular' profil.username %}">Sorularım</a></li>
+	  <li role="presentation"><a href="{% url 'url_kayit_ol' %}">Cevaplarım</a></li>
+	  <li role="presentation" class="pull-right"><a href="{% url 'uye_profil_guncelle' %}"><strong>Bilgilerimi Düzenle</strong></a></li>
+	</ul>	
+<div class="clearfix"></div>
+
+</div>
+</div>
+<div class="clearfix"></div><br/>
+{% include '../messages.html' %}
+
+
+<div class="row q-list q-list-grid">
+
+{% if sorular %}
+	{% for soru in sorular %}
+	<div class="col-sm-6 col-md-4">
+	<section class="white-box q-mini-box">
+		<a href="{{ soru.url_detail }}" name="{{ soru.title }}">
+			<h3 title="{{ soru.title }}">{{ soru.title }}</h3>
+			<strong>{{ soru.cevaplar.count }} yanıt</strong>
+		</a>
+	</section>
+	</div>
+	{% endfor %}
+
+{% else %}
+<section class="col-sm-12">
+<div class="q-item q-list-item"><br/>
+<div class="alert alert-warning text-center">Hiç İçerik Bulunamadı</div>
+</div>
+</section>
+{% endif %}
+
+</div>
+
+
+
+
+</div>
+{% endblock %}
+
+{% block script %}
+{% include '../q-list-scripts.html' %}
+{% endblock %}

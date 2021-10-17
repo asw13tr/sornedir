@@ -1,0 +1,12 @@
+{% load static %}
+<script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+<script src="{% static 'js/masonry.pkgd.min.js' %}"></script>
+<script>
+	var $grid = $('.q-list-grid').masonry({
+	  // options...
+	});
+	// layout Masonry after each image loads
+	$grid.imagesLoaded().progress( function() {
+	  $grid.masonry('layout');
+	});
+</script>

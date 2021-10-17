@@ -1,0 +1,21 @@
+{% if messages %}
+{% for message in messages %}  
+
+	{% if message.level_tag == 'success' %}
+		<div class="alert alert-success alert-dismissible" role="alert">
+	{% elif message.level_tag == 'info' %}
+		<div class="alert alert-info alert-dismissible" role="alert">
+	{% elif message.level_tag == 'error' %}
+		<div class="alert alert-danger alert-dismissible" role="alert">
+	{% elif message.level_tag == 'warning' %}
+		<div class="alert alert-warning alert-dismissible" role="alert">
+	{% else %}
+		<div class="alert alert-info alert-dismissible" role="alert">
+	{% endif %}
+	
+	<button type="button" class="close" data-dismiss="alert" aria-label="Kapat"><span aria-hidden="true">&times;</span></button>
+	<p>{{ message|safe }}</p>
+	</div>	
+
+{% endfor %}
+{% endif %}

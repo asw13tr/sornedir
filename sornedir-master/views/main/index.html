@@ -1,0 +1,26 @@
+{% extends '../main.html' %}
+{% block content %}
+
+	<style>
+		#selected_hashtags span{ background: #e0e0e0; color:block; font-weight: 600; display: inline-block; margin: 3px; padding: 3px 5px;  }
+		#hashtaglist{ border: 1px solid #e0e0e0; 
+			list-style-type: none; margin: 0; padding: 0; height: auto; overflow-x: hidden; overflow-y: auto;  max-height: 400px;}
+		#hashtaglist li{ display: block; padding: 8px; border-bottom: 1px solid #E0E0E0; font-weight: 600; cursor: pointer; }
+		#hashtaglist li:hover{ background: #00DDDD;  }
+	</style>
+
+<div id="selected_hashtags"></div>
+<div style="clear: both;"></div>
+<form action="" method="POST" id="hashtagsform">
+	{% csrf_token %}
+	<div class="form-group">
+	<div style="clear: both;"></div>
+	<input type="text" name="selected_ids" id="selected_ids" disabled/>
+	<input type="text" id="hashtag" class="form-control" placeholder="Etiket Adı Griniz" />
+	<input type="submit" class="btn btn-primary" value="Gönder">
+	</div>
+	<ul id="hashtaglist">
+	</ul>
+</form>
+
+{% endblock %} 

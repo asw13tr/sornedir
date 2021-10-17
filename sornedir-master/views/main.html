@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+	<meta charset="UTF-8">
+	<title>{% if meta_title %}{{ meta_title }}{% else %}{% block title %}Sornedir.Net{% endblock %}{% endif %}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=latin-ext" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=latin-ext" rel="stylesheet">
+	{% block head %}{% endblock %}
+</head>
+<body> 
+{% include 'main_navbar.html' %}
+<div class="container">
+	<div class="row">
+
+		<div class="{% if hide_sidebar %}col-sm-12{% else %}col-sm-9{% endif %}">{% block content %}{% endblock %}</div>
+		{% if not hide_sidebar %}
+		<div class="col-sm-3">
+			{% block sidebar_top %}{% endblock %}
+
+			
+			{% if asw_categories %}
+			<h4 class="big-title2 text-center pt10 pb10">Kategoriler</h4>
+			<div class="side-list white-box">
+			<ul>
+				{% for item in asw_categories %}
+					<li><a href="{{ item.url_questions }}" name="{{ item.name }}">{{ item.name }} <em>({{ item.count_questions }})</em></a></li>
+				{% endfor %}
+			</ul>
+			</div>
+			{% endif %}
+
+
+
+			{% if asw_actual_questions %}
+			<h4 class="big-title2 text-center pt10 pb10">Gündem</h4>
+				{% for soru in asw_actual_questions|slice:":10" %}
+					<section class="white-box q-mini-box">
+					<a href="{{ soru.url_detail }}" name="{{ soru.title }}">
+						<h3 title="{{ soru.title }}">{{ soru.title }}</h3>
+						<strong>{{ soru.cevaplar.count }} yanıt</strong>
+					</a>
+					</section>
+				{% endfor %}
+			{% endif %}
+
+			
+			{% block sidebar_bottom %}{% endblock %}
+		</div>
+		{% endif %}
+	</div>
+</div>
+
+
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/fontawesome-all.min.js' %}"></script>
+{% block script %}{% endblock %}
+<script src="{% static 'js/custom.js' %}"></script>
+{% block footer %}{% endblock %}
+</body>
+</html> 

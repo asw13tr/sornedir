@@ -1,0 +1,91 @@
+{% extends '../main.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+<form action="" method="POST" id="form_soru_sor">
+	{% csrf_token %}
+	<input type="hidden" name="selected-tag-ids" id="selected-tag-ids" value="" />
+	{{ create_soru_form|crispy }}
+	{{ create_soru_form.media }}
+	<div class="form-group"><button class="btn btn-primary">Soruyu Sor</button></div>
+</form>
+{% endblock %}
+
+
+{% block head %}
+<style>
+	#div_id_tags{ display: none; height: 0px; width:0px;  }
+</style>
+{% endblock %}
+
+
+{% block script %}
+{% load static %}
+<style>
+	.controls {
+		position: relative;
+	}
+</style>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+<script>
+	$(function(){
+
+		var selected_ids = [];
+
+		var input_id_tags = $('input#id_ajax_tags');
+		input_id_tags.attr('autocomplete', 'off');
+		input_id_tags.after('<div id="autocomlete-list" class="autocomlete-list row"></div>');
+		input_id_tags.before('<div id="selected-tag-list" class="selected-tag-list"></div>');
+		var tag_value  = null;
+
+
+		input_id_tags.on('keyup', function(){
+			tag_value = $(this).val();
+			var get_selected_ids = selected_ids.join('-');
+			$.ajax({
+				method: 'GET',
+				url: "{% url 'get_json_tags' %}",
+				data: { 'q':tag_value, 'ids':get_selected_ids },
+				dataType: 'json',
+				success: function(data){
+					console.log(data)
+					if(data.exists != true){
+						$('#autocomlete-list').html('').hide();
+					}else{
+						$('#autocomlete-list').html('').fadeIn(100);
+						$.each(data.items, function(key, val){
+							$('#autocomlete-list').prepend('<div id="'+key+'" data-text="'+val[0]+'" class="item col-xs-6 col-sm-3"><div><strong>'+val[0]+'</strong><p>'+val[1]+'</p></div></div>');
+						});	
+					}
+				}
+			});
+		});
+
+
+
+		
+
+		$(document).on('click', '#autocomlete-list > div', function(){  
+			var click_id = $(this).attr('id');
+			var click_text = $(this).attr('data-text'); 
+			$(this).remove();
+			selected_ids.push(click_id);
+			$('select#id_tags option[value='+click_id+']').attr('selected',''); 
+			$('#selected-tag-list').prepend('<span class="removeTag">'+click_text+'<em class="fa fa-times" data-id="'+click_id+'"></em></span>');
+		});//$('body').on('click', '#id_list_div li', function(){
+
+
+		$(document).on('click', 'span.removeTag svg', function(){
+			var click_id = $(this).attr('data-id');
+			selected_ids.splice( selected_ids.indexOf(click_id), 1 );
+			$(this).parent().remove();
+			$('select#id_tags option[value='+click_id+']').removeAttr('selected',''); 
+		});
+
+
+
+		//$('body').not('#autocomlete-list').on('click', function(){ $('#autocomlete-list').html('').hide(); });
+		
+	});//$(function(){
+</script>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends '../main.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+<form action="" method="POST" id="form_soru_sor">
+	{% csrf_token %}
+	{{ yenisoruform|crispy }}
+	{{ create_soru_form.media }}
+	<div class="form-group"><button class="btn btn-primary">Soruyu Sor</button></div>
+</form>
+{% endblock %}
+
+{% block script %}
+{% load static %}
+<style>
+	.controls {
+		position: relative;
+	}
+</style>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+{% endblock %}

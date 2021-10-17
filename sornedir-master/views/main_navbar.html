@@ -1,0 +1,52 @@
+<nav class="navbar navbar-default navbar-fixed-top" id="mainNavbar">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#headerMenu" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Sor Nedir</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="headerMenu">
+      <ul class="nav navbar-nav">
+        <li><a href="{% url 'url_gundem' %}">Gündem</a></li>
+        <li><a href="{% url 'url_sorular' %}">Son Sorular</a></li>
+        <li><a href="#">Kategoriler</a></li>
+        <li><a href="#">Etiketler</a></li>
+      </ul>
+      
+
+	
+
+	{% if not request.user.is_authenticated %}
+      <div class="pull-right"  style="line-height: 50px">
+      	<a href="{% url 'url_giris_yap' %}" class="btn btn-primary btn-sm" id="header-login-btn"> Giriş Yap </a><a href="{% url 'url_kayit_ol' %}" class="btn btn-danger btn-sm" id="header-register-btn"> Kayıt Ol</a>
+      </div>
+    {% else %}
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><em class="fa fa-comment-alt"></em></a></li>
+        <li><a href="#"><em class="fa fa-trophy"></em></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><em class="fa fa-bars"></em> <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'url_soru_sor' %}"><strong>Yeni Soru Sor</strong></a></li>
+            <li><a href="#">Sorularım</a></li>
+            <li><a href="#">Cevaplarım</a></li>
+            <li><a href="{% url 'url_profilim' %}">Profilim</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{% url 'url_cikis_yap' %}">Çıkış Yap</a></li>
+          </ul>
+        </li>
+      </ul>
+
+	{% endif %}
+
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
